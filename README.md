@@ -5,7 +5,7 @@ This is my solution to the [Quizzical React App](https://www.scrimba.com) solo p
 ## Table of contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
+  - [Use cases](#use-cases)
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
@@ -19,12 +19,23 @@ This is my solution to the [Quizzical React App](https://www.scrimba.com) solo p
 
 ## Overview
 
-### The challenge
+### Use cases
+
+- Start quiz state
+- Active quiz state
+- Scored quiz state
 
 Users should be able to:
 
-- Example: View the optimal layout for the interface depending on their device's screen size
-- Example: See hover and focus states for all interactive elements on the page
+- View the optimal layout for the interface depending on their device's screen size
+- See hover and focus states for all interactive elements on the page
+
+Enhancements
+- Select difficulty (easy, medium, hard)
+- Track running score
+- Select number of questions
+- Select type of questions (multiple choice or true/false)
+- Select cagegory
 
 ### Screenshot
 
@@ -47,6 +58,7 @@ Add a screenshot of your solution. The easiest way to do this is to use Firefox 
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
+- CSS Modules - Joy of React module 1, styling in React
 - [React](https://reactjs.org/) - JS library
 - [Vite](https://vitejs.dev/) - Frontend tooling
 
