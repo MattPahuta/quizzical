@@ -1,8 +1,9 @@
 
 function Header() {
   return (
-    <header>
-      <h1>Quizzical</h1>
+    <header className="header">
+      <h1 className="title">Quizzical</h1>
+      <p>Test your knowledge</p>
     </header>
   )
 }
