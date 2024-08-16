@@ -129,6 +129,18 @@ body {
   background: var(--primary-100);
 }
 
+.start-section {
+  text-align: center;
+}
+
+.start-section h2 {
+  margin-bottom: var(--spacing-100);
+}
+
+.start-section p {
+  margin-bottom: var(--spacing-500);
+}
+
 .btn {
   border: none;
   cursor: pointer;
@@ -164,4 +176,9 @@ body {
 .quit-btn {
   background: var(--secondary);
   color: var(--text-dark);
+}
+
+.quit-btn:hover,
+.quit-btn:focus-within {
+  background-color: var(--secondary-400);
 }

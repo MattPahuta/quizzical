@@ -3,7 +3,7 @@ function Header() {
   return (
     <header className="header">
       <h1 className="title">Quizzical</h1>
-      <p>Test your knowledge</p>
+      <p>Just another React quiz app</p>
     </header>
   )
 }

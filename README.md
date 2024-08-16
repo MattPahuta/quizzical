@@ -29,13 +29,19 @@ Users should be able to:
 
 - View the optimal layout for the interface depending on their device's screen size
 - See hover and focus states for all interactive elements on the page
+- Start quiz
+- See 5 multiple choice questions, select thier answers
+- Click button to score results
+- See correct/incorrect choices selected
+- Get 5 new questions or exit quiz
 
 Enhancements
 - Select difficulty (easy, medium, hard)
 - Track running score
-- Select number of questions
-- Select type of questions (multiple choice or true/false)
-- Select cagegory
+- Select number of questions to receive
+- Select category
+- Present mix of question types (multiple choice and true/false)
+- Track previously answered questions during a giving session
 
 ### Screenshot
 
