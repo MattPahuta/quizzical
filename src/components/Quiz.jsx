@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { formatQuestions } from '../../utils';
+
   /* 
 
     Quiz screen 
@@ -21,40 +23,34 @@ import React from 'react';
     - randomize displayed answers
     Constants:
     - API base url
+    State:
+    - questions from API - default: []
+    - answers from user? - default: []
 
   */
 
+
+
 function Quiz({quitQuiz}) {
-  
-  const url = 'https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple';
+  const url =
+    'https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple';
   const [questions, setQuestions] = React.useState([]);
-  const [reset, setReset] = React.useState(false)
+  const [reset, setReset] = React.useState(false);
 
   // fetch quiz data from api
   function getQuestions() {
     fetch(url)
-      .then(res => res.json())
-      .then(data => setQuestions(data.results))
+      .then((res) => res.json())
+      .then((data) => setQuestions(data.results));
   }
 
   React.useEffect(() => {
-    getQuestions()
-  }, [])
+    getQuestions();
+  }, []);
 
-  console.log(questions)
+  console.log(questions);
 
-  // format questions with answers
-  // 
-
-  const formattedQuestion = {
-    question: 'question',
-    answers: [
-      { answer: 'answer text', isCorrect: true },
-      { answer: 'answer text', isCorrect: false },
-      { answer: 'answer text', isCorrect: false },
-      { answer: 'answer text', isCorrect: false },
-    ],
-  };
+  console.log(formatQuestions(questions))
 
   return (
     <section>
@@ -64,9 +60,11 @@ function Quiz({quitQuiz}) {
         <li>Question</li>
         <li>Question</li>
       </ul>
-      <button className="btn quit-btn" onClick={quitQuiz}>Exit Quiz</button>
+      <button className="btn quit-btn" onClick={quitQuiz}>
+        Exit Quiz
+      </button>
     </section>
-  )
+  );
 }
 
 export default Quiz;
