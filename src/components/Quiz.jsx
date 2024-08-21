@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Question from './Question';
+import Answer from './Answer';
+
 import { formatQuestions } from '../../utils';
 
   /* 
@@ -50,20 +53,40 @@ function Quiz({quitQuiz}) {
 
   console.log(questions);
 
-  console.log(formatQuestions(questions))
+  // console.log(formatQuestions(questions))
+
+  const questionsToRender = formatQuestions(questions)
+  console.log(questionsToRender)
+
+  // function Question(quizObj) {
+  //   const { question } = quizObj
+
+  //   return (
+  //     <fieldset className='question-container'>
+  //       <legend className='question-title'>{question}</legend>
+  //       <div className='answers-container'>
+  //       </div>
+  //     </fieldset>
+  //   )
+
+  // }
+
+
+
+  const questionElements = questionsToRender.map((questionObj) => (
+    <Question key={Math.random()} questionText={questionObj.question} />
+  ))
+
 
   return (
-    <section>
-      <h2>Welcome to the Quiz!</h2>
-      <ul>
-        <li>Question</li>
-        <li>Question</li>
-        <li>Question</li>
-      </ul>
-      <button className="btn quit-btn" onClick={quitQuiz}>
-        Exit Quiz
-      </button>
-    </section>
+    <form>
+      {/* map over formated questions to produce 5 questions */}
+      {/* question elements */}
+      {questionElements}
+      <div className='btn-container'>
+        <button className='btn submit-btn'>Submit Answers</button>
+      </div>
+    </form>
   );
 }
 

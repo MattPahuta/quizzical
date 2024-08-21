@@ -1,6 +1,6 @@
-// format questions with answers
+// format questions with answers - data from API
 export function formatQuestions(data) {
-  console.log(data.results);
+  // console.log(data.results);
   return data.map((questionObj) => {
     const { question, correct_answer, incorrect_answers } =
       questionObj; // destructure needed props
