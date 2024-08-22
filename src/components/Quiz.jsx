@@ -54,28 +54,16 @@ function Quiz({quitQuiz}) {
 
   console.log(questions);
 
-  // console.log(formatQuestions(questions))
-
   const questionsToRender = formatQuestions(questions)
   console.log(questionsToRender)
 
-  // function Question(quizObj) {
-  //   const { question } = quizObj
-
-  //   return (
-  //     <fieldset className='question-container'>
-  //       <legend className='question-title'>{question}</legend>
-  //       <div className='answers-container'>
-  //       </div>
-  //     </fieldset>
-  //   )
-
-  // }
-
-
-
+  // Generate 5 Question components from formated questions array
   const questionElements = questionsToRender.map((questionObj) => (
-    <Question key={Math.random()} questionText={questionObj.question} />
+    <Question 
+      key={Math.random()} 
+      questionTitle={questionObj.question} 
+      questionAnswers={questionObj.answers} 
+    />
   ))
 
 

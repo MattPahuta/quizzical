@@ -1,17 +1,17 @@
-function Answer({answer, name}) {
+function Answer({answerText, answerName}) {
 
   return (
     <div className="answer">
       <input
         type="radio"
-        id={answer}
-        value={answer}
-        name={name}
+        id={answerText}
+        value={answerText}
+        name={answerName}
         checked={false}
         className="radio-input-choice visually-hidden"
       />
-      <label htmlFor={answer} className="choice-btn">
-        {answer}
+      <label htmlFor={answerText} className="choice-btn">
+        {answerText}
       </label>
     </div>
   );

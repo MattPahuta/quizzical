@@ -85,6 +85,18 @@ body {
 
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .wrapper {
   min-height: 100%;
   /* padding: var(--spacing-300); */
@@ -148,11 +160,17 @@ body {
   }
 }
 
-.start-btn {
+/* ToDo: consolidate start/submit btns to 'primary-btn' */
+.start-btn,
+.submit-btn {
+  padding-inline: 1.25em;
   background: var(--primary-600);
-  color: var(--text-light);
+  color: var(--primary-100);
+  font-weight: 500;
 }
 
+.submit-btn:hover,
+.submit-btn:focus-within,
 .start-btn:hover,
 .start-btn:focus-within {
   background: var(--primary-400);
@@ -183,7 +201,7 @@ body {
   gap: 1rem;
 }
 
-.label-btn,
+.choice-btn,
 .btn {
   cursor: pointer;
   display: inline-flex;
@@ -214,3 +232,4 @@ body {
   background: var(--primary-400);
   color: var(--text-light);
 }
+
