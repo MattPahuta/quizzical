@@ -104,25 +104,12 @@ body {
   font-size: var(--fs-700);
 }
 
-.main {
-  padding: var(--spacing-300);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .container {
   margin-inline: auto;
   margin-block-start: 5rem;
   padding: var(--spacing-300);
   min-width: 320px;
   width: clamp(20rem, 92vw, 68rem);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-300);
-  flex: 1;
   border-radius: var(--spacing-200);
   background: var(--primary-100);
 }
@@ -179,4 +166,51 @@ body {
 .quit-btn:hover,
 .quit-btn:focus-within {
   background-color: var(--secondary-400);
+}
+
+/* quiz styles */
+.question-container {
+  border: none;
+}
+
+.question {
+  font-size: 1.25rem;
+}
+
+.answers-container {
+  padding-block: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.label-btn,
+.btn {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .5rem;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  padding: 0.25em 0.75em;
+  min-width: 10ch;
+  min-height: 44px;
+  text-align: center;
+  line-height: 1.1;
+  transition: 220ms all ease-in-out;
+}
+
+.choice-btn {
+  background: var(--primary-200);
+  color: var(--text-dark);
+}
+
+.choice-btn:hover,
+.choice-btn:focus-within {
+  background: var(--primary-500);
+  color: var(--text-light);
+}
+
+.answer input[type="radio"]:checked+label {
+  background: var(--primary-400);
+  color: var(--text-light);
 }

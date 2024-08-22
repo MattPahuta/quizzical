@@ -1,3 +1,5 @@
+import { decode } from 'html-entities';
+
 // format questions with answers - data from API
 export function formatQuestions(data) {
   // console.log(data.results);
@@ -17,6 +19,6 @@ export function formatQuestions(data) {
       () => Math.random() - 0.5
     );
     // return formated question object
-    return { question, answers: shuffledAnswers };
+    return { question: decode(question), answers: shuffledAnswers };
   });
 }
