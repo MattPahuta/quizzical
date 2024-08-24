@@ -25,13 +25,6 @@ function App() {
     // setShowStart(false);
     console.log('Quiz in progress: ', quizInProgress)
   }
-  // exit quiz, unmount Quiz, mount start 
-  function quitQuiz() {
-    console.log('quitting quiz...')
-    setQuizInProgress(false)
-    console.log('Quiz in progress: ', quizInProgress);
-  }
-
 
   return (
     <div className="wrapper">
@@ -39,7 +32,7 @@ function App() {
       <main>
         <div className='container'>
           {!quizInProgress && <Start startQuiz={startQuiz} />}
-          {quizInProgress && <Quiz quitQuiz={quitQuiz} /> }
+          {quizInProgress && <Quiz /> }
         </div>
       </main>
     </div>

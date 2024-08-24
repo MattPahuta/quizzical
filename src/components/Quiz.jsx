@@ -1,82 +1,149 @@
 import React from 'react';
 
 import Question from './Question';
-import Answer from './Answer';
-
 import { formatQuestions } from '../../utils';
 
-
-  /* 
-
-    Quiz screen 
-      - collect answers (use form)
-      - tally correct/incorrect answers after submit
-      - display selected answers, incorrect answers   
-  
-    Hints: 
-     - use html-entities library to decode the html entities coming back in the question
-     - create an array with all answers, randomly insert correct_answer into the array w/incorrect_answers
-
-     Header will always be present
-     main div will always be present
-
-     Helper functions:
-     - format questions
-      - combine correct and incorrect answers into one array
-      - track correct question
-    - randomize displayed answers
-    Constants:
-    - API base url
-    State:
-    - questions from API - default: []
-    - answers from user? - default: []
-
-  */
-
-
-
-function Quiz({quitQuiz}) {
-  const url =
-    'https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple';
+function Quiz() {
+  // State variables for quiz functionality
   const [questions, setQuestions] = React.useState([]);
-  const [reset, setReset] = React.useState(false);
-
-  // fetch quiz data from api
-  function getQuestions() {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setQuestions(data.results));
-  }
+  const [userAnswers, setUserAnswers] = React.useState({});
+  const [score, setScore] = React.useState(0);
+  const [quizFinished, setQuizFinished] = React.useState(false);
 
   React.useEffect(() => {
-    getQuestions();
+    fetchQuestions();
   }, []);
+
+  // Fetch quiz data from API
+  async function fetchQuestions() {
+    const response = await fetch(
+      'https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple'
+    );
+    const data = await response.json();
+    const formattedQuestions = formatQuestions(data.results);
+    setQuestions(formattedQuestions);
+  }
 
   console.log(questions);
 
-  const questionsToRender = formatQuestions(questions)
-  console.log(questionsToRender)
+  // Handle user selected answers, changing of answer
+  // ToDo: port to utils?
+  function handleAnswerChange(questionId, answer) {
+    setUserAnswers({
+      ...userAnswers,
+      [questionId]: answer
+    });
+  }
+
+  // Handle sumbit of quiz
+  function handleSubmit(event) {
+    event.preventDefault();
+    setQuizFinished(true);
+  }
+
+  // Calculate score
+  function calculateScore() {
+    const correctAnswers = questions.filter(
+      question => userAnswers[question.id] === question.correct_answer
+    ).length;
+    setScore(correctAnswers)
+  }
+
+
+  // Restart quiz
+  function restartQuiz() {
+    fetchQuestions();
+    setUserAnswers([]);
+    setScore({});
+    setQuizFinished(false);
+  }
+
+  // Loading message while data is retrieved
+  // ToDo: add a loading spinner - react component, via npm?
+  if (!questions.length) return <div>Loading...</div>;
+
+  // Calculate user score - ToDo: port to utils
+  // function calculateScore() {
+  //   const correctAnswers = answers.filter(
+  //     (answer) => answer.isCorrect
+  //   ).length;
+  //   setScore(correctAnswers);
+  // }
 
   // Generate 5 Question components from formated questions array
-  const questionElements = questionsToRender.map((questionObj) => (
-    <Question 
-      key={Math.random()} 
-      questionTitle={questionObj.question} 
-      questionAnswers={questionObj.answers} 
-    />
-  ))
+  // const questionElements = questions.map(
+  //   (questionObj, index) => (
+  //     <Question
+  //       key={index}
+  //       questionTitle={questionObj.question}
+  //       questionAnswers={questionObj.answers}
+  //       questionName={`question-${index + 1}`}
+  //     />
+  //   )
+  // );
 
+  /* 
+    ToDo:
+    - add nanoID to use for better ID gen for answer inputs, labels
+    - Port Question component
+  */
 
   return (
-    <form>
-      {/* map over formated questions to produce 5 questions */}
-      {/* question elements */}
-      {questionElements}
-      <div className='btn-container'>
-        <button className='btn submit-btn'>Submit Answers</button>
-      </div>
+    <form onSubmit={handleSubmit}>
+      {questions.map((question, index) => (
+        <fieldset key={index} className='question-container'>
+          <legend className='question-title'>{question.question}</legend>
+          <div className='answers-container'>
+            {question.answers.map((answerObj, i) => (
+              <div key={i} className='answer'>
+                <input 
+                  type='radio'
+                  name={`question-${question.id}`}
+                  value={answerObj.answer}
+                  onChange={() => handleAnswerChange(question.id, answerObj.answer)}
+                  checked={userAnswers[question.id] === answerObj.answer}
+                  disabled={quizFinished}
+                  id={answerObj.answer}
+                />
+                <label htmlFor={answerObj.answer} className='choice-btn'>
+                  {answerObj.answer}
+                </label>
+              </div>
+            ))}
+          </div>
+        </fieldset>
+      ))}
+      {!quizFinished ? (
+        <button type='submit' className='btn'>Submit Answers</button>
+      ) : (
+        <div className='score-container'>
+          <p>Your score: {score} / {questions.length}</p>
+          <button onClick={restartQuiz} className='btn'>Play Again</button>
+        </div>
+      )}
     </form>
-  );
+  )
+
+
+//   return (
+//     <div>
+//       {!quizFinished ? (
+//         <form>
+//           {questionElements}
+//         </form>
+//       ) : (
+//         <div>
+//           <h2>Quiz Complete</h2>
+//           <p>Your score: {score}</p>
+//           <button className="btn" onClick={restartQuiz}>
+//             Restart Quiz
+//           </button>
+//         </div>
+//       )}
+//     </div>
+//   );
+
+
 }
 
 export default Quiz;

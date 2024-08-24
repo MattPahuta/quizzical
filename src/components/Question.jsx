@@ -1,40 +1,16 @@
 import React from "react";
 
 import Answer from './Answer';
-/*
-  Question component needs:
-  - question 
-  - array of 4 answers
-    - correct answer flagged?
-*/
 
-// *** Map 4 individual answers for each question
-// function Answer({answer}) {
 
-//   return (
-//     <div className="answer">
-//       <input 
-//         type="radio" 
-//         name={`question-${index}`} 
-//         id={answer} 
-//         value={answer}
-//         checked={false}
-//         className="radio-input-choice visually-hidden" />
-//       <label 
-//         htmlFor="" 
-//         className="choice-btn">
-//       </label>
-//     </div>
-//   )
-// }
 
-function Question({questionTitle, questionAnswers}) {
+function Question({questionTitle, questionAnswers, questionName}) {
 
-  const answers = questionAnswers.map((answerObj, index) => (
+  const answers = questionAnswers.map((answerObj) => (
     <Answer
       key={Math.random()}
       answerText={answerObj.answer}
-      answerName={`answer-${index + 1}`}
+      answerName={questionName}
     />
   ));
 
