@@ -24,7 +24,7 @@ export function formatQuestionsOriginal(data) {
   });
 }
 
-const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
+export const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
 
 export function formatQuestions(data) {
   return data.map((question, index) => (

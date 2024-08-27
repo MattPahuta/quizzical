@@ -5,7 +5,7 @@ function Start({startQuiz}) {
     <section className='start-section'>
       <h2>Ready to test your knowledge?</h2>
       <p>Click the button below to get started.</p>
-      <button className="btn start-btn" onClick={startQuiz}>
+      <button className="btn btn-primary" onClick={startQuiz}>
         Start Quiz
       </button>
     </section>

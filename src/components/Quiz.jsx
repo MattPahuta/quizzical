@@ -2,6 +2,8 @@ import React from 'react';
 
 import Question from './Question';
 import { formatQuestions } from '../../utils';
+import { shuffle } from '../../utils';
+import { decode } from 'html-entities';
 
 function Quiz() {
   // State variables for quiz functionality
@@ -15,13 +17,24 @@ function Quiz() {
   }, []);
 
   // Fetch quiz data from API
-  async function fetchQuestions() {
-    const response = await fetch(
-      'https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple'
-    );
-    const data = await response.json();
-    const formattedQuestions = formatQuestions(data.results);
-    setQuestions(formattedQuestions);
+  function fetchQuestions() {
+    fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.results)
+        const formattedQuestions = data.results.map((questionObj, index) => ({
+          id: index,
+          question: decode(questionObj.question),
+          correct_answer: questionObj.correct_answer,
+          answers: shuffle([
+            {answer: decode(questionObj.correct_answer), isCorrect: true},
+            ...questionObj.incorrect_answers.map(answer => ({answer, isCorrect: false}))
+          ])
+        }))
+        setQuestions(formattedQuestions);
+      })
+      .catch(error => console.error('Error fetching quiz data:', error));
+
   }
 
   console.log(questions);
@@ -38,6 +51,7 @@ function Quiz() {
   // Handle sumbit of quiz
   function handleSubmit(event) {
     event.preventDefault();
+    calculateScore()
     setQuizFinished(true);
   }
 
@@ -47,6 +61,7 @@ function Quiz() {
       question => userAnswers[question.id] === question.correct_answer
     ).length;
     setScore(correctAnswers)
+    console.log(userAnswers)
   }
 
 
@@ -89,23 +104,32 @@ function Quiz() {
   */
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='quiz-form'>
       {questions.map((question, index) => (
-        <fieldset key={index} className='question-container'>
-          <legend className='question-title'>{question.question}</legend>
-          <div className='answers-container'>
+        <fieldset key={index} className="question-container">
+          <legend className="question-title">
+            {question.question}
+          </legend>
+          <div className="answers-container">
             {question.answers.map((answerObj, i) => (
-              <div key={i} className='answer'>
-                <input 
-                  type='radio'
+              <div key={i} className="answer">
+                <input
+                  type="radio"
                   name={`question-${question.id}`}
                   value={answerObj.answer}
-                  onChange={() => handleAnswerChange(question.id, answerObj.answer)}
-                  checked={userAnswers[question.id] === answerObj.answer}
+                  onChange={() =>
+                    handleAnswerChange(question.id, answerObj.answer)
+                  }
+                  checked={
+                    userAnswers[question.id] === answerObj.answer
+                  }
                   disabled={quizFinished}
                   id={answerObj.answer}
+                  className="radio-input-choice visually-hidden"
                 />
-                <label htmlFor={answerObj.answer} className='choice-btn'>
+                <label
+                  htmlFor={answerObj.answer}
+                  className="choice-btn">
                   {answerObj.answer}
                 </label>
               </div>
@@ -114,15 +138,21 @@ function Quiz() {
         </fieldset>
       ))}
       {!quizFinished ? (
-        <button type='submit' className='btn'>Submit Answers</button>
+        <button type="submit" className="btn btn-primary">
+          Submit Answers
+        </button>
       ) : (
-        <div className='score-container'>
-          <p>Your score: {score} / {questions.length}</p>
-          <button onClick={restartQuiz} className='btn'>Play Again</button>
+        <div className="score-container">
+          <p className='score-message'>
+            Your scored {score} / {questions.length} correct answers
+          </p>
+          <button onClick={restartQuiz} className="btn btn-primary">
+            Play Again
+          </button>
         </div>
       )}
     </form>
-  )
+  );
 
 
 //   return (

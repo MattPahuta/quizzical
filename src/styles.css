@@ -1,4 +1,21 @@
 /* Custom Variables */
+
+:root[data-theme="light"] {
+  --text: hsl(230, 67%, 7%);
+  --background: hsl(230, 60%, 98%);
+  --primary: hsl(233, 68%, 53%);
+  --alert: hsl(0, 94%, 74%);
+  --accent: hsl(91, 68%, 64%);
+}
+:root[data-theme="dark"] {
+  --text: hsl(230, 67%, 93%);
+  --background: hsl(230, 60%, 2%);
+  --primary: hsl(233, 68%, 47%);
+  --alert: hsl(0, 94%, 26%);
+  --accent: hsl(91, 68%, 36%);
+}
+
+
 :root {
   
   /* Fonts */
@@ -18,25 +35,26 @@
   --spacing-500: 2.5rem;
 
   /* Colors */
-  --text-light: hsl(244, 68%, 95%);
-  --text-dark: hsl(242, 65%, 9%);
-  --background: hsl(240, 68%, 95%);
+  --white: hsl(0, 0%, 100%);
+  --text: hsl(230, 67%, 7%);
+  --background: hsl(230, 60%, 98%);
+  --primary: hsl(233, 68%, 53%);
+  --primary-light: hsl(233, 69%, 70%);;
+  --alert: hsl(0, 94%, 74%);
+  --accent: hsl(91, 68%, 64%);
 
-  --primary-100: hsl(240, 65%, 90%);
-  --primary-200: hsl(239, 67%, 80%);
-  --primary-400: hsl(239, 66%, 60%);
-  --primary-500: hsl(239, 66%, 50%);
-  --primary-600: hsl(239, 66%, 29%);
+    --primary-100: hsl(233, 68%, 95%);
+  /* --primary-100: hsl(233, 69%, 90%); */
+  --primary-200: hsl(233, 69%, 80%);
+  --primary-300: hsl(233, 69%, 70%);
+  --primary-400: hsl(233, 68%, 60%);
+  --primary-500: hsl(233, 68%, 50%);
+  --primary-600: hsl(233, 68%, 40%);
+  --primary-700: hsl(233, 69%, 30%);
+  --primary-800: hsl(233, 69%, 20%);
+  --primary-900: hsl(233, 69%, 10%);
+  --primary-950: hsl(233, 68%, 53%, 5%);
 
-  --secondary-100: hsl(351, 79%, 72%);
-  --secondary-200: hsl(351, 79%, 60%);
-  --secondary-300: hsl(351, 79%, 50%);
-  --secondary-400: hsl(351, 79%, 40%);
-
-  --accent-100: hsl(93, 66%, 60%);
-  --accent-200: hsl(93, 66%, 50%);
-  --accent-300: hsl(93, 66%, 47%);
-  --accent-400: hsl(93, 66%, 40%);
 
   /* Border radius */
   --br-soft: 1rem;
@@ -44,35 +62,6 @@
 
 }
 
-/* :root[data-theme="light"] {
-  --text: hsl(242, 65%, 9%);
-  --background: hsl(240, 68%, 95%);
-  --primary: hsl(239, 66%, 29%);
-  --secondary: hsl(351, 79%, 72%);
-  --accent: hsl(93, 66%, 47%);
-}
-:root[data-theme="dark"] {
-  --text: hsl(242, 65%, 91%);
-  --background: hsl(240, 68%, 5%);
-  --primary: hsl(239, 66%, 71%);
-  --secondary: hsl(351, 79%, 28%);
-  --accent: hsl(93, 66%, 53%);
-} */
-
-/* :root[data-theme="light"] {
-  --text: hsl(213, 69%, 5%);
-  --background: hsl(212, 68%, 95%);
-  --primary: hsl(207, 69%, 30%);
-  --secondary: hsl(355, 68%, 66%);
-  --accent: hsl(44, 69%, 41%);
-}
-:root[data-theme="dark"] {
-  --text: hsl(213, 69%, 95%);
-  --background: hsl(212, 68%, 5%);
-  --primary: hsl(207, 69%, 70%);
-  --secondary: hsl(355, 68%, 34%);
-  --accent: hsl(44, 69%, 59%);
-} */
 
 /* BASE STYLES */
 body {
@@ -80,7 +69,7 @@ body {
   font-family: var(--ff-primary);
   font-size: var(--fs-400);
   background: var(--background);
-  color: var(--text-dark);
+  color: var(--text);
   line-height: 1.5;  
 
 }
@@ -168,19 +157,17 @@ body {
 }
 
 /* ToDo: consolidate start/submit btns to 'primary-btn' */
-.start-btn,
-.submit-btn {
+.btn-primary {
   padding-inline: 1.25em;
-  background: var(--primary-600);
-  color: var(--primary-100);
+  background: var(--primary);
+  color: var(--white);
   font-weight: 500;
+  align-self: center;
 }
 
-.submit-btn:hover,
-.submit-btn:focus-within,
-.start-btn:hover,
-.start-btn:focus-within {
-  background: var(--primary-400);
+.btn-primary:hover {
+  transform: translate(0, -3px);
+  box-shadow: 0 20px 80px -10px var(--primary);
 }
 
 .quit-btn {
@@ -194,7 +181,14 @@ body {
 }
 
 /* quiz styles */
+.quiz-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-300);
+}
+
 .question-container {
+  padding: 0;
   border: none;
 }
 
@@ -203,9 +197,12 @@ body {
 }
 
 .answers-container {
-  padding-block: 1rem;
+  padding-block: var(--spacing-300);
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 1rem;
+  border-bottom: 1px solid var(--text);
 }
 
 .choice-btn,
@@ -225,14 +222,13 @@ body {
 }
 
 .choice-btn {
-  background: var(--primary-200);
-  color: var(--text-dark);
+  background: var(--background);
+  color: var(--text);
 }
 
 .choice-btn:hover,
 .choice-btn:focus-within {
-  background: var(--primary-500);
-  color: var(--text-light);
+  background: var(--primary-light);
 }
 
 .answer input[type="radio"]:checked+label {
