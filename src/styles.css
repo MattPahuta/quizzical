@@ -222,8 +222,9 @@ body {
 }
 
 .choice-btn {
-  background: var(--background);
+  /* background: var(--background); */
   color: var(--text);
+  border: 1px solid var(--text);
 }
 
 .choice-btn:hover,
@@ -233,6 +234,15 @@ body {
 
 .answer input[type="radio"]:checked+label {
   background: var(--primary-400);
-  color: var(--text-light);
+  /* color: var(--text-light); */
 }
 
+/* Answer Styling */
+/* also need choice-btn */
+.correct-answer {
+  background: var(--accent) !important;
+}
+
+.incorrect-answer {
+  background: var(--alert) !important;
+}

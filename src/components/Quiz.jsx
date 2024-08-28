@@ -38,6 +38,7 @@ function Quiz() {
   }
 
   console.log(questions);
+  console.log(userAnswers);
 
   // Handle user selected answers, changing of answer
   // ToDo: port to utils?
@@ -73,29 +74,27 @@ function Quiz() {
     setQuizFinished(false);
   }
 
+  // Get styling classes for answers
+  // ToDo: port to utils
+  function getAnswerClass(questionId, answer) {
+    if (!quizFinished) return 'choice-btn';
+
+    const correctAnswer = questions.find(q => q.id === questionId).correct_answer;
+    const userAnswer = userAnswers[questionId];
+
+    // Note: can I use ternary here? is else clause needed?
+    if (answer === correctAnswer) { // user selected right answer?
+      return 'choice-btn correct-answer';
+    } else if (answer === userAnswer) { // user selected wrong answer?
+      return 'choice-btn incorrect-answer';
+    } else {
+      return '';
+    }
+  }
+
   // Loading message while data is retrieved
   // ToDo: add a loading spinner - react component, via npm?
   if (!questions.length) return <div>Loading...</div>;
-
-  // Calculate user score - ToDo: port to utils
-  // function calculateScore() {
-  //   const correctAnswers = answers.filter(
-  //     (answer) => answer.isCorrect
-  //   ).length;
-  //   setScore(correctAnswers);
-  // }
-
-  // Generate 5 Question components from formated questions array
-  // const questionElements = questions.map(
-  //   (questionObj, index) => (
-  //     <Question
-  //       key={index}
-  //       questionTitle={questionObj.question}
-  //       questionAnswers={questionObj.answers}
-  //       questionName={`question-${index + 1}`}
-  //     />
-  //   )
-  // );
 
   /* 
     ToDo:
@@ -129,7 +128,7 @@ function Quiz() {
                 />
                 <label
                   htmlFor={answerObj.answer}
-                  className="choice-btn">
+                  className={getAnswerClass(question.id, answerObj.answer)}>
                   {answerObj.answer}
                 </label>
               </div>
