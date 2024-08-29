@@ -87,12 +87,9 @@ body {
 }
 
 .wrapper {
-  min-height: 100%;
-  /* padding: var(--spacing-300); */
+  /* min-height: 100%;
   display: flex;
-  flex-direction: column;
-  /* align-items: center;
-  gap: var(--spacing-500); */
+  flex-direction: column; */
 }
 
 .header {
@@ -192,6 +189,10 @@ body {
   border: none;
 }
 
+.question-title {
+  font-size: var(--fs-500);
+}
+
 .question {
   font-size: 1.25rem;
 }
@@ -222,7 +223,6 @@ body {
 }
 
 .choice-btn {
-  /* background: var(--background); */
   color: var(--text);
   border: 1px solid var(--text);
 }
@@ -234,11 +234,20 @@ body {
 
 .answer input[type="radio"]:checked+label {
   background: var(--primary-400);
-  /* color: var(--text-light); */
 }
 
-/* Answer Styling */
-/* also need choice-btn */
+.score-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-500);
+}
+
+.score-message {
+  font-size: var(--fs-500);
+  font-weight: 500;
+}
+
 .correct-answer {
   background: var(--accent) !important;
 }

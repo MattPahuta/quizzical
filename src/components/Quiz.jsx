@@ -28,7 +28,7 @@ function Quiz() {
           correct_answer: questionObj.correct_answer,
           answers: shuffle([
             {answer: decode(questionObj.correct_answer), isCorrect: true},
-            ...questionObj.incorrect_answers.map(answer => ({answer, isCorrect: false}))
+            ...questionObj.incorrect_answers.map(answer => ({answer: decode(answer), isCorrect: false}))
           ])
         }))
         setQuestions(formattedQuestions);
@@ -88,7 +88,7 @@ function Quiz() {
     } else if (answer === userAnswer) { // user selected wrong answer?
       return 'choice-btn incorrect-answer';
     } else {
-      return '';
+      return 'choice-btn';
     }
   }
 
