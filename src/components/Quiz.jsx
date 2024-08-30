@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Question from './Question';
-import { formatQuestions } from '../../utils';
+// import { formatQuestions } from '../../utils';
 import { shuffle } from '../../utils';
 import { decode } from 'html-entities';
+import Question from './Question';
 
 function Quiz() {
   // State variables for quiz functionality
@@ -65,7 +65,6 @@ function Quiz() {
     console.log(userAnswers)
   }
 
-
   // Restart quiz
   function restartQuiz() {
     fetchQuestions();
@@ -74,67 +73,23 @@ function Quiz() {
     setQuizFinished(false);
   }
 
-  // Get styling classes for answers
-  // ToDo: port to utils
-  function getAnswerClass(questionId, answer) {
-    if (!quizFinished) return 'choice-btn';
-
-    const correctAnswer = questions.find(q => q.id === questionId).correct_answer;
-    const userAnswer = userAnswers[questionId];
-
-    // Note: can I use ternary here? is else clause needed?
-    if (answer === correctAnswer) { // user selected right answer?
-      return 'choice-btn correct-answer';
-    } else if (answer === userAnswer) { // user selected wrong answer?
-      return 'choice-btn incorrect-answer';
-    } else {
-      return 'choice-btn';
-    }
-  }
-
   // Loading message while data is retrieved
   // ToDo: add a loading spinner - react component, via npm?
   if (!questions.length) return <div>Loading...</div>;
 
-  /* 
-    ToDo:
-    - add nanoID to use for better ID gen for answer inputs, labels
-    - Port Question component
-  */
-
   return (
     <form onSubmit={handleSubmit} className='quiz-form'>
       {questions.map((question, index) => (
-        <fieldset key={index} className="question-container">
-          <legend className="question-title">
-            {question.question}
-          </legend>
-          <div className="answers-container">
-            {question.answers.map((answerObj, i) => (
-              <div key={i} className="answer">
-                <input
-                  type="radio"
-                  name={`question-${question.id}`}
-                  value={answerObj.answer}
-                  onChange={() =>
-                    handleAnswerChange(question.id, answerObj.answer)
-                  }
-                  checked={
-                    userAnswers[question.id] === answerObj.answer
-                  }
-                  disabled={quizFinished}
-                  id={answerObj.answer}
-                  className="radio-input-choice visually-hidden"
-                />
-                <label
-                  htmlFor={answerObj.answer}
-                  className={getAnswerClass(question.id, answerObj.answer)}>
-                  {answerObj.answer}
-                </label>
-              </div>
-            ))}
-          </div>
-        </fieldset>
+        <Question 
+          key={index}
+          questionId={question.id}
+          questionText={question.question}
+          answers={question.answers}
+          userAnswer={userAnswers[question.id]}
+          quizFinished={quizFinished}
+          handleAnswerChange={handleAnswerChange}
+          correctAnswer={question.correct_answer}
+        />
       ))}
       {!quizFinished ? (
         <button type="submit" className="btn btn-primary">
@@ -152,26 +107,6 @@ function Quiz() {
       )}
     </form>
   );
-
-
-//   return (
-//     <div>
-//       {!quizFinished ? (
-//         <form>
-//           {questionElements}
-//         </form>
-//       ) : (
-//         <div>
-//           <h2>Quiz Complete</h2>
-//           <p>Your score: {score}</p>
-//           <button className="btn" onClick={restartQuiz}>
-//             Restart Quiz
-//           </button>
-//         </div>
-//       )}
-//     </div>
-//   );
-
 
 }
 
