@@ -17,6 +17,7 @@ function Quiz() {
   }, []);
 
   // Fetch quiz data from API
+  // ToDo: port formatting of questions to utils
   function fetchQuestions() {
     fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
       .then(res => res.json())
