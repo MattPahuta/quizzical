@@ -2,21 +2,16 @@ import React from 'react';
 
 
 function Answer({answerText, isCorrect, isSelected, quizFinished, onChange}) {
-  const answerId = React.useId();
+  const answerId = React.useId(); // get unique ID for each input/label pair
   // Get styling classes for answers
   // ToDo: port to utils
-  // Or, rework this to different format
-  // - const selectedCorrect = answer === correctAnswer
-  // - const selectedIncorrect = uswerAnswer
   const getAnswerClass = () => {
-    if (!quizFinished) return 'choice-btn';
-
     if (isCorrect) {
-      return 'choice-btn correct-answer';
+      return 'correct-answer';
     } else if (isSelected) {
-      return 'choice-btn incorrect-answer';
+      return 'incorrect-answer';
     } else {
-      return 'choice-btn';
+      return '';
     }
   };
 
@@ -31,7 +26,7 @@ function Answer({answerText, isCorrect, isSelected, quizFinished, onChange}) {
         id={answerId}
         className="radio-input-choice visually-hidden"
       />
-      <label htmlFor={answerId} className={getAnswerClass()}>
+      <label htmlFor={answerId} className={'choice-btn ' + (quizFinished && getAnswerClass())}>
         {answerText}
       </label>
     </div>
