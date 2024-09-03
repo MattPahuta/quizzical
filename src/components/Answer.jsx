@@ -1,10 +1,8 @@
 import React from 'react';
 
-
 function Answer({answerText, isCorrect, isSelected, quizFinished, onChange}) {
   const answerId = React.useId(); // get unique ID for each input/label pair
   // Get styling classes for answers
-  // ToDo: port to utils
   const getAnswerClass = () => {
     if (isCorrect) {
       return 'correct-answer';

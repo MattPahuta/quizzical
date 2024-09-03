@@ -1,15 +1,15 @@
 import React from 'react';
 
-// import { formatQuestions } from '../../utils';
-import { shuffle } from '../../utils';
-import { decode } from 'html-entities';
 import Question from './Question';
+import { formatQuestions } from '../../utils';
+// import { decode } from 'html-entities';
 
 function Quiz() {
   // State variables for quiz functionality
   const [questions, setQuestions] = React.useState([]);
   const [userAnswers, setUserAnswers] = React.useState({});
   const [score, setScore] = React.useState(0);
+  // ToDo: rename to quizIsComplete, setQuizIsComplete
   const [quizFinished, setQuizFinished] = React.useState(false);
 
   React.useEffect(() => {
@@ -17,32 +17,21 @@ function Quiz() {
   }, []);
 
   // Fetch quiz data from API
-  // ToDo: port formatting of questions to utils
   function fetchQuestions() {
     fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
       .then(res => res.json())
       .then(data => {
         console.log(data.results)
-        const formattedQuestions = data.results.map((questionObj, index) => ({
-          id: index,
-          question: decode(questionObj.question),
-          correct_answer: questionObj.correct_answer,
-          answers: shuffle([
-            {answer: decode(questionObj.correct_answer), isCorrect: true},
-            ...questionObj.incorrect_answers.map(answer => ({answer: decode(answer), isCorrect: false}))
-          ])
-        }))
+        const formattedQuestions = formatQuestions(data.results)
         setQuestions(formattedQuestions);
       })
       .catch(error => console.error('Error fetching quiz data:', error));
-
   }
 
   console.log(questions);
   console.log(userAnswers);
 
   // Handle user selected answers, changing of answer
-  // ToDo: port to utils?
   function handleAnswerChange(questionId, answer) {
     setUserAnswers({
       ...userAnswers,
@@ -50,9 +39,14 @@ function Quiz() {
     });
   }
 
+  // ToDo: prevent submit if < 5 answers selected
   // Handle sumbit of quiz
   function handleSubmit(event) {
     event.preventDefault();
+    if (Object.keys(userAnswers).length < 5) {
+      alert('Please select an answer for all 5 questions.')
+      return;
+    }
     calculateScore()
     setQuizFinished(true);
   }

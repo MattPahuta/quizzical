@@ -19,28 +19,6 @@ function Question({questionId, questionText, answers, userAnswer, quizFinished, 
             quizFinished={quizFinished}
             onChange={() => handleAnswerChange(questionId, answerObj.answer)}
           />
-          // <div key={index} className="answer">
-          //   <input
-          //     type="radio"
-          //     name={`question-${questionId}`}
-          //     value={answerObj.answer}
-          //     onChange={() =>
-          //       handleAnswerChange(questionId, answerObj.answer)
-          //     }
-          //     checked={
-          //       userAnswer === answerObj.answer
-          //     }
-          //     disabled={quizFinished}
-          //     id={answerObj.answer}
-          //     className="radio-input-choice visually-hidden"
-          //   />
-          //   <label
-          //     htmlFor={answerObj.answer}
-          //     className={getAnswerClass(answerObj.answer)}
-          //   >
-          //     {answerObj.answer}
-          //   </label>
-          // </div>
         ))}
       </div>
     </fieldset>
