@@ -27,15 +27,13 @@ function App() {
   }
 
   return (
-    <div className="wrapper">
+    <>
       <Header />
-      <main>
-        <div className='container'>
-          {!quizInProgress && <Start startQuiz={startQuiz} />}
-          {quizInProgress && <Quiz /> }
-        </div>
+      <main className="container">
+        {!quizInProgress && <Start startQuiz={startQuiz} />}
+        {quizInProgress && <Quiz />}
       </main>
-    </div>
+    </>
   );
 }
 

@@ -24,7 +24,11 @@ function Answer({answerText, isCorrect, isSelected, quizFinished, onChange}) {
         id={answerId}
         className="radio-input-choice visually-hidden"
       />
-      <label htmlFor={answerId} className={'choice-btn ' + (quizFinished && getAnswerClass())}>
+      <label
+        htmlFor={answerId}
+        className={
+          'choice-btn ' + (quizFinished && getAnswerClass())
+        }>
         {answerText}
       </label>
     </div>
